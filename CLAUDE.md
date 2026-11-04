@@ -165,7 +165,7 @@ Reutilizar los componentes visuales existentes. Agregar la nav mobile del admin.
 
 Dividido en sub-etapas:
 - **7a ✅ (aprobada por Mikael 2026-11-04):** rutas `/`, `/perfil`, `/mis-inscripciones`, `/admin` con layout `app/(jugador)`. Sidebar con nombre y foto reales, link al backoffice solo para el admin, perfil editable (Server Action, verificado en la base). Inicio, Mis inscripciones y admin siguen con mocks en `components/mock/` con aviso "Vista de ejemplo".
-- **7b:** admin — configuración (medios de pago) y partidos (crear, editar, cambiar estado) + nav mobile del admin.
+- **7b ✅ (probada por Mikael 2026-11-04, verificada en la base y en `audit_logs`):** `app/admin/layout.tsx` + `AdminShell` (drawer mobile), `/admin/configuracion` (medios de pago, alta/edición/activar), `/admin/partidos` (lista con cupos), `/nuevo` y `/[id]` (edición y transiciones de estado con confirmación). Horarios siempre en hora argentina (`lib/dates.ts`, offset fijo -03:00). Server Actions devuelven `ActionState` con `fields` para no perder lo escrito (React 19 resetea el form). Errores de la base: se muestra el HINT (`dbErrorMessage`).
 - **7c:** jugador — próximo partido, listas, anotarse, datos de transferencia, subir comprobante, mis inscripciones reales.
 - **7d:** admin — cola de pagos, inscripciones con filtros y promoción de suplentes, jugadores, dashboard real.
 
