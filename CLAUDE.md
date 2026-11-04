@@ -134,7 +134,11 @@ Especificación original:
 - Políticas: INSERT solo dentro de la carpeta propia. SELECT propio o admin. Sin UPDATE ni DELETE para jugadores.
 - El admin ve los comprobantes con signed URLs generadas en el servidor.
 
-### Paso 5 — Google OAuth (guiado, configuración externa)
+### Paso 5 — Google OAuth ✅ (configurado 2026-11-03)
+
+Estado: proyecto `MATCHDAY` en Google Cloud, pantalla de consentimiento External **en producción** (sin verificación de marca: la pantalla muestra el dominio de Supabase, es cosmético), sin scopes extra. Cliente OAuth Web con orígenes localhost:3000 y el dominio de Vercel. Provider Google activo en Supabase (verificado vía `/auth/v1/settings` y `/authorize`: redirige a Google con `scope=email profile` y el callback correcto). Site URL y Redirect URLs (`/**`) cargadas. Página `/privacidad` creada (Google la exige). El JSON con el client secret lo guarda Mikael fuera del repo.
+
+Especificación original:
 Proyecto en Google Cloud, pantalla de consentimiento, credenciales OAuth Web y callback `https://uwputddqhhgcwrcetlci.supabase.co/auth/v1/callback`. En Supabase: activar el provider Google, Site URL y Redirect URLs (localhost:3000 y el dominio de Vercel). Guiar paso a paso y verificar.
 
 ### Paso 6 — Conexión Next.js ↔ Supabase
@@ -160,6 +164,7 @@ Reutilizar los componentes visuales existentes. Agregar la nav mobile del admin.
 - Pruebas funcionales, de permisos y de concurrencia (casos de la sección 9 del documento de contexto).
 - Variables en Vercel, deploy y verificación en producción.
 
-## Decisiones funcionales abiertas
+## Decisiones funcionales
 
-- ¿Grupo cerrado (lista de emails habilitados) o cualquiera con Google? Según la respuesta, ajustar el texto del login ("Solo para jugadores invitados").
+- Acceso abierto (decidido 2026-11-03): **cualquiera con cuenta de Google** puede entrar (vienen amigos y familiares ocasionales). No hay lista de emails habilitados. Quitar del login el texto "Solo para jugadores invitados".
+- Dominio de producción en Vercel: `https://matchday-alpha-seven.vercel.app`.
