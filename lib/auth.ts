@@ -3,6 +3,7 @@ import { cache } from 'react'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import type { Tables } from '@/lib/supabase/database.types'
+import { isAdminEmail } from '@/lib/admin-emails'
 
 export type SessionUser = { id: string; email: string }
 export type Profile = Pick<Tables<'profiles'>, 'id' | 'email' | 'full_name' | 'avatar_url' | 'position'>
@@ -41,13 +42,12 @@ export const getMyProfile = cache(async (): Promise<Profile> => {
 
 /**
  * ¿Es admin? Dos capas, las dos tienen que dar sí:
- *  1. El email coincide con ADMIN_EMAIL (variable solo del servidor).
+ *  1. El email está en ADMIN_EMAIL (variable solo del servidor, admite varios separados por coma).
  *  2. La base lo confirma con public.is_admin() (tabla public.admins).
  */
 export const isAdmin = cache(async (): Promise<boolean> => {
   const user = await getUser()
-  const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase()
-  if (!user || !adminEmail || user.email !== adminEmail) return false
+  if (!user || !isAdminEmail(user.email)) return false
 
   const supabase = await createClient()
   const { data, error } = await supabase.rpc('is_admin')

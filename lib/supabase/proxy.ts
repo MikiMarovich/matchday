@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { isAdminEmail } from '@/lib/admin-emails'
 
 // Rutas accesibles sin sesión.
 const PUBLIC_PATHS = ['/login', '/auth', '/privacidad']
@@ -10,7 +11,7 @@ const isPublic = (pathname: string) =>
 /**
  * Refresca la sesión de Supabase en cada request y protege las rutas:
  *  - Sin sesión → /login (salvo rutas públicas).
- *  - /admin sin ser ADMIN_EMAIL → /.
+ *  - /admin con un email que no está en ADMIN_EMAIL (lista separada por comas) → /.
  * La autorización real del admin vive en la base (public.is_admin()); esto es la primera capa.
  */
 export async function updateSession(request: NextRequest) {
@@ -63,9 +64,8 @@ export async function updateSession(request: NextRequest) {
   }
 
   if (pathname === '/admin' || pathname.startsWith('/admin/')) {
-    const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase()
-    const email = typeof claims?.email === 'string' ? claims.email.toLowerCase() : null
-    if (!adminEmail || email !== adminEmail) {
+    const email = typeof claims?.email === 'string' ? claims.email : null
+    if (!isAdminEmail(email)) {
       return redirectTo('/')
     }
   }

@@ -1,6 +1,6 @@
 # MATCHDAY — Contexto para Claude Code
 
-App web para organizar partidos de fútbol de un grupo de amigos: portal de jugadores + backoffice de un único administrador.
+App web para organizar partidos de fútbol de un grupo de amigos: portal de jugadores + backoffice para los administradores (dos desde 2026-11-04).
 El documento original de requerimientos (`docs/contexto-matchday.md`) **se perdió y no existe**. Este CLAUDE.md es la única fuente: no vuelvas a relevar lo que ya está definido acá, y ante lo que no esté cubierto, preguntale a Mikael.
 
 Usuario: Mikael, analista funcional con conocimientos de Python, JavaScript y MySQL. Respondé en español rioplatense, con terminología técnica pero explicando configuraciones y decisiones de arquitectura.
@@ -55,7 +55,7 @@ Decisiones ya tomadas en el 001:
 
 - Enums: `player_position`, `match_status` (DRAFT, OPEN, CLOSED, PLAYED, CANCELLED), `registration_status` (los 6 estados del requerimiento) y `payment_provider` (MERCADO_PAGO, NARANJA_X).
 - Sin columna `role` en `profiles`. Los admins están en la tabla `public.admins` (email), invisible para la API.
-- La autorización admin tiene dos capas: `ADMIN_EMAIL` en el servidor Next y `public.is_admin()` en la base.
+- La autorización admin tiene dos capas: `ADMIN_EMAIL` en el servidor Next (lista separada por comas, `lib/admin-emails.ts`) y `public.is_admin()` en la base. **Los dos lugares deben tener los mismos emails.**
 - `matches.starts_at timestamptz` y `ends_at` opcional. `price` es `integer` (pesos enteros). `max_players` va de 2 a 50.
 - `registrations`:
   - Guarda snapshots de pago (método, alias, cuenta, titular).
@@ -185,6 +185,11 @@ Decisión de Mikael: **Gmail SMTP** (nodemailer 10.1.7) en lugar de Resend, porq
 ### Paso 10 — Producción
 - Hecho: variables en Vercel, deploy automático, login con Google, inscripción, comprobante y email probados en producción por Mikael.
 - Falta: una prueba real con un segundo jugador (un amigo) desde su celular.
+
+### Segundo admin (2026-11-04)
+- `006_second_admin.sql`: agrega `agulosgigantes1@gmail.com` a `public.admins` y cambia `log_receipt_notification` para recibir `p_recipient` (validado contra `admins`, una fila por destinatario, idempotente por destinatario). 14 pruebas en PGlite.
+- El aviso de comprobante se manda a todos los emails de `ADMIN_EMAIL` (un email por admin).
+- Para sumar o quitar un admin: INSERT/DELETE en `public.admins` **y** actualizar `ADMIN_EMAIL` en `.env.local` y en Vercel (y redeploy).
 
 ### Mejoras futuras (decididas por Mikael, no urgentes)
 - **Compartir el comprobante desde Mercado Pago directo a la app** (2026-11-04): Web Share Target (`share_target` en el manifiesto + service worker que recibe el archivo y una pantalla `/compartir` que lo sube con el circuito actual). Funciona **solo en Android** y con la app instalada ("Agregar a pantalla principal"). iPhone no lo soporta (Safari no implementa share_target): para ellos, sugerir "Compartir → Guardar imagen". El grupo es mitad Android y mitad iPhone. Por ahora los jugadores sacan captura y la suben.

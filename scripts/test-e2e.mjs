@@ -178,7 +178,7 @@ async function playerPermissions({ M, D }) {
   check('p2 no puede enviar comprobante por p1', errIs(await as(p2, `select public.submit_receipt($1, $2)`, [reg1.id, `${p2.id}/${reg1.id}/x.pdf`]), 'REGISTRATION_NOT_FOUND'))
   check('p1 no puede usar una ruta fuera de su carpeta', errIs(await as(users.p1, `select public.submit_receipt($1, $2)`, [reg1.id, `${p2.id}/${reg1.id}/x.pdf`]), 'INVALID_RECEIPT_PATH'))
   check('p1 no puede declarar un archivo que no subió', errIs(await as(users.p1, `select public.submit_receipt($1, $2)`, [reg1.id, `${users.p1.id}/${reg1.id}/inventado.pdf`]), 'RECEIPT_NOT_FOUND'))
-  check('p2 no puede registrar emails sobre p1', errIs(await as(p2, `select public.log_receipt_notification($1, 'SENT')`, [reg1.id]), 'REGISTRATION_NOT_FOUND'))
+  check('p2 no puede registrar emails sobre p1', errIs(await as(p2, `select public.log_receipt_notification($1, $2, 'SENT')`, [reg1.id, admin.email]), 'REGISTRATION_NOT_FOUND'))
   check('p2 no puede aprobar pagos', errIs(await as(p2, `select public.approve_payment($1)`, [reg1.id]), 'FORBIDDEN'))
   check('p2 no puede promover suplentes', errIs(await as(p2, `select public.promote_from_waitlist($1, null)`, [M]), 'FORBIDDEN'))
   check('p2 no puede cerrar el partido', errIs(await as(p2, `select public.admin_set_match_status($1, 'CLOSED')`, [M]), 'FORBIDDEN'))
