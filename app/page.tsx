@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { ArrowRight, Bell, CalendarDays, Check, ChevronDown, Clock3, CreditCard, FileCheck2, Home, LayoutDashboard, LogOut, MapPin, Menu, MoreHorizontal, Plus, Receipt, Settings, ShieldCheck, Trophy, Upload, Users, WalletCards, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Logo } from '@/components/logo'
 
 const players = [
   { name: 'Tomás Echeverría', role: 'Mediocampista', initials: 'TE', tone: 'lime' },
@@ -18,9 +19,6 @@ const navItems = [
   { label: 'Mi perfil', icon: Users },
 ]
 
-function Logo({ compact = false }: { compact?: boolean }) {
-  return <div className="flex items-center gap-2"><div className="logo-mark"><Trophy /></div>{!compact && <span className="text-lg font-black tracking-tight text-white">MATCH<span className="text-lime">DAY</span></span>}</div>
-}
 
 function Avatar({ player, small = false }: { player: typeof players[number], small?: boolean }) {
   return <div className={`avatar avatar-${player.tone} ${small ? 'avatar-small' : ''}`}>{player.initials}</div>
@@ -46,7 +44,7 @@ function PlayerList({ title, players: list, empty = false }: { title: string, pl
 }
 
 function Sidebar({ current, onNavigate, mobileOpen, onClose, onAdmin }: { current: string, onNavigate: (x: string) => void, mobileOpen: boolean, onClose: () => void, onAdmin: () => void }) {
-  return <aside className={`sidebar ${mobileOpen ? 'sidebar-open' : ''}`}><div className="sidebar-head"><Logo /><button className="close-mobile" onClick={onClose}><X /></button></div><div className="profile-mini"><div className="profile-avatar">JC</div><div><strong>Juan Cruz</strong><span>Jugador</span></div><ChevronDown /></div><nav>{navItems.map(({ label, icon: Icon }) => <button className={current === label ? 'active' : ''} key={label} onClick={() => { onNavigate(label); onClose() }}><Icon />{label}</button>)}</nav><div className="sidebar-bottom"><button onClick={() => onNavigate('Login')}><LogOut />Cerrar sesión</button><div className="admin-link" role="button" tabIndex={0} onClick={onAdmin} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') onAdmin() }}><ShieldCheck /><span>¿Sos administrador?<b>Ir al backoffice</b></span><ArrowRight /></div></div></aside>
+  return <aside className={`sidebar ${mobileOpen ? 'sidebar-open' : ''}`}><div className="sidebar-head"><Logo /><button className="close-mobile" onClick={onClose}><X /></button></div><div className="profile-mini"><div className="profile-avatar">JC</div><div><strong>Juan Cruz</strong><span>Jugador</span></div><ChevronDown /></div><nav>{navItems.map(({ label, icon: Icon }) => <button className={current === label ? 'active' : ''} key={label} onClick={() => { onNavigate(label); onClose() }}><Icon />{label}</button>)}</nav><div className="sidebar-bottom"><form action="/auth/signout" method="post"><button type="submit"><LogOut />Cerrar sesión</button></form><div className="admin-link" role="button" tabIndex={0} onClick={onAdmin} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') onAdmin() }}><ShieldCheck /><span>¿Sos administrador?<b>Ir al backoffice</b></span><ArrowRight /></div></div></aside>
 }
 
 function Header({ onMenu, title }: { onMenu: () => void, title: string }) {
@@ -69,11 +67,9 @@ function HistoryScreen() {
 
 function ProfileScreen() { return <div className="content-page"><div className="page-heading"><div><span className="eyebrow lime-text">CUENTA</span><h1>Mi perfil</h1><p>Administrá tus datos personales.</p></div><Button variant="outline">Editar perfil</Button></div><div className="panel profile-card"><div className="large-avatar">JC</div><div className="profile-fields"><div><span>Nombre completo</span><strong>Juan Cruz Rodríguez</strong></div><div><span>Email</span><strong>juan.cruz@gmail.com</strong></div><div><span>Posición habitual</span><strong>Mediocampista</strong></div></div></div></div> }
 
-function LoginScreen({ onLogin }: { onLogin: () => void }) { return <main className="login-screen"><div className="login-brand"><Logo /><span className="eyebrow">FÚTBOL ENTRE AMIGOS</span></div><div className="login-card"><div className="login-ball"><Trophy /></div><h1>Entrá a la cancha</h1><p>Organizá tus partidos y jugá con tu gente.</p><Button className="google-button" onClick={onLogin}><span className="google-g">G</span>Continuar con Google</Button><div className="login-note"><ShieldCheck /> Acceso seguro. Solo para jugadores invitados.</div></div><span className="login-footer">MATCHDAY · Tu partido, tu equipo.</span></main> }
 
 export default function Page() {
-  const [screen, setScreen] = useState('Inicio'); const [mobileOpen, setMobileOpen] = useState(false); const [logged, setLogged] = useState(true); const [admin, setAdmin] = useState(false)
-  if (!logged) return <LoginScreen onLogin={() => setLogged(true)} />
+  const [screen, setScreen] = useState('Inicio'); const [mobileOpen, setMobileOpen] = useState(false); const [admin, setAdmin] = useState(false)
   if (admin) return <AdminApp onExit={() => setAdmin(false)} />
   return <div className="app-shell"><Sidebar current={screen} onNavigate={setScreen} mobileOpen={mobileOpen} onClose={() => setMobileOpen(false)} onAdmin={() => setAdmin(true)} /><div className="main-shell"><Header onMenu={() => setMobileOpen(true)} title={screen === 'Inicio' ? 'Inicio' : screen} /><main className="page-content">{screen === 'Inicio' && <HomeScreen onRegister={() => setScreen('Inscripción')} />}{screen === 'Inscripción' && <RegistrationScreen onBack={() => setScreen('Inicio')} />}{screen === 'Mis inscripciones' && <HistoryScreen />}{screen === 'Mi perfil' && <ProfileScreen />}</main></div></div>
 }
