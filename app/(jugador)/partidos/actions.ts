@@ -31,6 +31,19 @@ export async function registerForMatch(matchId: string): Promise<ActionState> {
     : { status: 'ok', message: '¡Lugar reservado! Transferí y subí el comprobante antes de que venza el plazo.' }
 }
 
+/** Suplente voluntario: queda en la fila de suplentes aunque haya lugar, sin pagar (join_waitlist, 007). */
+export async function joinWaitlist(matchId: string): Promise<ActionState> {
+  await requireUser()
+  if (!UUID.test(matchId)) return fail('Partido inválido.')
+
+  const supabase = await createClient()
+  const { error } = await supabase.rpc('join_waitlist', { p_match_id: matchId })
+  if (error) return fail(dbErrorMessage(error))
+
+  revalidatePlayer()
+  return { status: 'ok', message: 'Quedaste como suplente. Si querés jugar, avisale al organizador.' }
+}
+
 /**
  * Se llama después de subir el archivo a Storage desde el navegador.
  * submit_receipt verifica dueño, estado, plazo, que la ruta sea de esta inscripción

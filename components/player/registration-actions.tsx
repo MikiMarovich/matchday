@@ -6,7 +6,7 @@ import { ArrowRight, Check, Copy, FileCheck2, Upload } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { createClient } from '@/lib/supabase/client'
 import type { ActionState } from '@/lib/action-state'
-import { cancelRegistration, registerForMatch, submitReceipt } from '@/app/(jugador)/partidos/actions'
+import { cancelRegistration, joinWaitlist, registerForMatch, submitReceipt } from '@/app/(jugador)/partidos/actions'
 
 function Feedback({ state }: { state: ActionState | null }) {
   if (!state || state.status === 'idle') return null
@@ -22,17 +22,20 @@ function Feedback({ state }: { state: ActionState | null }) {
 export function RegisterButton({ matchId, full }: { matchId: string; full: boolean }) {
   const [pending, startTransition] = useTransition()
   const [state, setState] = useState<ActionState | null>(null)
+  const run = (action: () => Promise<ActionState>) => startTransition(async () => setState(await action()))
 
   return (
     <div className="register-box">
-      <Button
-        className="register-button"
-        disabled={pending}
-        onClick={() => startTransition(async () => setState(await registerForMatch(matchId)))}
-      >
-        {pending ? 'RESERVANDO…' : full ? 'ANOTARME DE SUPLENTE' : 'ANOTARME'}
+      <Button className="register-button" disabled={pending} onClick={() => run(() => registerForMatch(matchId))}>
+        {pending ? 'UN MOMENTO…' : full ? 'ANOTARME DE SUPLENTE' : 'ANOTARME'}
         {!pending && <ArrowRight data-icon="inline-end" />}
       </Button>
+      {/* Con lugar libre, el jugador puede elegir quedar como suplente sin reservar ni pagar. */}
+      {!full && (
+        <button type="button" className="text-button waitlist-link" disabled={pending} onClick={() => run(() => joinWaitlist(matchId))}>
+          No sé si llego: anotarme como suplente (sin pagar)
+        </button>
+      )}
       {state?.status === 'error' && <Feedback state={state} />}
     </div>
   )

@@ -339,6 +339,11 @@ export type Database = {
         }[]
       }
       is_admin: { Args: never; Returns: boolean }
+      join_waitlist: {
+        Args: { p_match_id: string }
+        Returns: RegistrationRow
+        SetofOptions: ReturnsOne<'registrations'>
+      }
       log_receipt_notification: {
         Args: { p_error?: string | null; p_message_id?: string | null; p_recipient: string; p_registration_id: string; p_status: string }
         Returns: undefined

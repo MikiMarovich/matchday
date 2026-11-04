@@ -54,10 +54,11 @@ function RosterList({ eyebrow, title, entries, empty, numbered = false }: {
 
 /* ---------- Panel "Tu inscripción" ---------- */
 
-function MyRegistrationPanel({ reg, userId, waitlistPosition, nowMs }: {
+function MyRegistrationPanel({ reg, userId, waitlistPosition, freeSlots, nowMs }: {
   reg: MyRegistration
   userId: string
   waitlistPosition: number | null
+  freeSlots: number
   nowMs: number
 }) {
   const status = effectiveStatus(reg, nowMs)
@@ -163,7 +164,11 @@ function MyRegistrationPanel({ reg, userId, waitlistPosition, nowMs }: {
         </div>
         <div>
           <strong>Sos suplente{waitlistPosition ? ` N.° ${waitlistPosition}` : ''}</strong>
-          <p>Si se libera un lugar, el administrador te lo asigna y te avisamos para que pagues. Por ahora no transfieras.</p>
+          <p>
+            {freeSlots > 0
+              ? `Hay ${freeSlots} ${freeSlots === 1 ? 'lugar libre' : 'lugares libres'}: si decidís jugar, cancelá la suplencia y anotate con lugar, o pedíselo al organizador. Por ahora no transfieras.`
+              : 'Si se libera un lugar, el organizador te lo asigna y vas a ver acá los datos para pagar. Por ahora no transfieras.'}
+          </p>
         </div>
         <div className="banner-side">
           <CancelRegistration registrationId={reg.id} />
@@ -287,7 +292,7 @@ export function MatchView({ match, roster, myReg, userId, eyebrow, nowMs }: {
       </section>
 
       {myReg && !isActive && <PreviousOutcome reg={myReg} nowMs={nowMs} />}
-      {myReg && isActive && <MyRegistrationPanel reg={myReg} userId={userId} waitlistPosition={myWaitlistPos} nowMs={nowMs} />}
+      {myReg && isActive && <MyRegistrationPanel reg={myReg} userId={userId} waitlistPosition={myWaitlistPos} freeSlots={match.status === 'OPEN' ? free : 0} nowMs={nowMs} />}
       {!isActive && match.status === 'CLOSED' && (
         <div className="demo-notice outcome-notice" role="note">
           <Info />

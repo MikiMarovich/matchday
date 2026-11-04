@@ -262,3 +262,8 @@ a.admin-alert-action:hover { border-color: var(--primary); }
   .filters { grid-template-columns: 1fr; }
   .match-tool { flex-direction: column; align-items: stretch; }
 }
+
+
+/* ===== Suplente voluntario ===== */
+.waitlist-link { font-size: 12px; color: #9db0bb; }
+.waitlist-link:hover { color: var(--primary); }

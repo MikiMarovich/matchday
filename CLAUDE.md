@@ -73,6 +73,7 @@ Para que nadie transfiera sin tener lugar asegurado:
 1. "Anotarme" ejecuta `register_for_match`. Si hay cupo, crea la inscripción en **PENDING_PAYMENT** con `payment_deadline` (plazo configurable) y **ocupa el cupo hasta que vence el plazo**. Si no hay cupo, la crea en **WAITLIST**, sin pago.
 2. Recién con el lugar reservado se muestran los datos de transferencia. El jugador transfiere y adjunta el comprobante: `submit_receipt` pasa la inscripción a **PENDING_REVIEW**.
 3. Ocupan cupo: CONFIRMED, PENDING_REVIEW y PENDING_PAYMENT con plazo vigente.
+4. **Suplente voluntario** (decidido por Mikael el 2026-11-04, `007_join_waitlist.sql`): aunque haya lugar, el jugador puede elegir "anotarme como suplente (sin pagar)" → `join_waitlist` crea WAITLIST, sin datos de pago y sin ocupar cupo. Entra a la misma fila por orden de llegada. Para jugar: el admin lo promueve, o el jugador cancela la suplencia y se anota con lugar. 14 pruebas en PGlite.
 
 Plazo por defecto de PENDING_PAYMENT: **30 minutos** (configurable). Al promover un suplente, el admin define el plazo.
 
