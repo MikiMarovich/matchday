@@ -33,6 +33,24 @@ export const MATCH_STATUS_TONE: Record<Enums<'match_status'>, 'success' | 'pendi
   CANCELLED: 'danger',
 }
 
+export const REGISTRATION_STATUS_LABELS: Record<Enums<'registration_status'>, string> = {
+  PENDING_PAYMENT: 'Lugar reservado, falta pagar',
+  PENDING_REVIEW: 'Comprobante en revisión',
+  CONFIRMED: 'Confirmado',
+  WAITLIST: 'Suplente',
+  REJECTED: 'Pago rechazado',
+  CANCELLED: 'Cancelada',
+}
+
+export const REGISTRATION_STATUS_TONE: Record<Enums<'registration_status'>, 'success' | 'pending' | 'danger' | 'neutral'> = {
+  PENDING_PAYMENT: 'pending',
+  PENDING_REVIEW: 'pending',
+  CONFIRMED: 'success',
+  WAITLIST: 'neutral',
+  REJECTED: 'danger',
+  CANCELLED: 'neutral',
+}
+
 /** "0000 0031 0000 0000 0000 00" → más fácil de leer y de verificar contra el home banking. */
 export function formatAccount(account: string): string {
   return account.replace(/(\d{4})(?=\d)/g, '$1 ')

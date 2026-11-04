@@ -140,3 +140,71 @@ input[type="date"].field-input, input[type="time"].field-input { color-scheme: d
 .stats-grid-compact .stat-card { padding: 14px; }
 .stats-grid-compact .stat-card > strong { font-size: 22px; }
 .status-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 18px; }
+
+
+/* ===== Etapa 7c: portal del jugador con datos reales ===== */
+
+.capitalize-first::first-letter { text-transform: uppercase; }
+.match-page { display: grid; gap: 0; }
+.match-page > .back-link { margin-bottom: 18px; }
+.match-tag-muted { color: #c4d0d7; background: #ffffff10; }
+.match-notes { position: relative; margin: 18px 0 0; padding-top: 16px; border-top: 1px solid #315263; color: #c4d0d7; font-size: 13px; line-height: 1.5; white-space: pre-line; }
+.register-box { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 60%; text-align: right; }
+
+/* Listas: confirmados / pendientes / suplentes */
+.roster-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 18px; }
+.empty-state-small { height: 120px; text-align: center; padding: 0 12px; }
+.player-row-me { background: #a3e6350d; border-radius: 8px; padding-left: 8px; padding-right: 8px; }
+.me-tag { font-style: normal; font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #101820; background: var(--primary); border-radius: 99px; padding: 2px 6px; margin-left: 7px; vertical-align: 1px; }
+.roster-number { width: 18px; text-align: center; font-size: 11px; font-weight: 800; color: #8195a4; }
+
+/* Tu inscripción */
+.my-registration { margin-top: 18px; }
+.panel-text { color: #9db0bb; font-size: 13px; line-height: 1.5; margin: -6px 0 16px; }
+.panel-text b { color: #fff; }
+.deadline-box { text-align: right; }
+.deadline-box span { display: block; font-size: 10px; letter-spacing: .08em; color: #8195a4; text-transform: uppercase; }
+.countdown { display: block; font-size: 26px; font-variant-numeric: tabular-nums; color: var(--primary); margin-top: 2px; }
+.countdown-urgent { color: #f2b273; }
+.copyable { display: inline-flex; align-items: center; gap: 6px; word-break: break-all; text-align: right; }
+.copy-button { border: 0; background: #203e4d; color: var(--primary); border-radius: 6px; width: 24px; height: 24px; display: inline-grid; place-items: center; flex-shrink: 0; }
+.copy-button svg { width: 13px; height: 13px; }
+.bank-details { margin-bottom: 0; }
+.bank-details p { align-items: center; gap: 12px; }
+.bank-details strong { font-size: 13px; }
+.bank-details .no-cash { margin-top: 14px; }
+.receipt-upload { display: flex; flex-direction: column; }
+.upload-zone { min-height: 150px; padding: 14px; text-align: center; }
+.upload-zone svg { width: 22px; height: 22px; }
+.upload-zone strong { word-break: break-all; }
+.upload-zone-ready { border-style: solid; border-color: var(--primary); background: #a3e6350a; }
+.receipt-upload .form-message { margin-top: 10px; }
+.my-registration-footer { margin-top: 16px; padding-top: 14px; border-top: 1px solid #294556; }
+.pending-banner-ok .pending-icon { background: #a3e63521; color: var(--primary); }
+.banner-side { margin-left: auto; }
+.outcome-notice { margin: 18px 0 0; }
+
+/* Cancelar inscripción */
+.text-button { border: 0; background: transparent; color: #8195a4; font-size: 12px; text-decoration: underline; padding: 4px 0; }
+.text-button:hover { color: #e98c8c; }
+.cancel-box { display: grid; gap: 12px; min-width: min(360px, 100%); }
+.cancel-warning { margin: 0; font-size: 12px; color: #e7cf8f; }
+
+/* Otros partidos y mis inscripciones */
+.other-matches { margin-top: 18px; }
+.history-link { color: inherit; text-decoration: none; }
+.history-link:hover { border-color: #2d5367; background: #1b3242; }
+.history-note { color: #e7cf8f !important; }
+
+@media (max-width: 900px) {
+  .roster-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 800px) {
+  .register-box { max-width: 100%; align-items: stretch; }
+  .match-footer { flex-wrap: wrap; gap: 14px; }
+  .match-footer .register-box { width: 100%; text-align: left; }
+  .banner-side { margin-left: 0; width: 100%; }
+  .deadline-box { text-align: left; }
+  .transfer-card .panel-heading { flex-direction: column; align-items: flex-start; gap: 12px; }
+}

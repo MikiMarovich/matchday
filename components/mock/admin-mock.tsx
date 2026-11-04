@@ -1,8 +1,18 @@
 // DASHBOARD CON DATOS DE EJEMPLO (heredado de v0). Se reemplaza por métricas reales en la etapa 7d.
 // Este archivo se borra cuando ya no lo use ninguna ruta.
 
-import { CalendarDays, Receipt, Users, WalletCards } from 'lucide-react'
-import { DemoNotice } from './player-mock'
+import { CalendarDays, Info, Receipt, Users, WalletCards } from 'lucide-react'
+
+function DemoNotice() {
+  return (
+    <div className="demo-notice" role="note">
+      <Info />
+      <span>
+        <b>Vista de ejemplo.</b> Las métricas reales llegan en la próxima actualización.
+      </span>
+    </div>
+  )
+}
 
 const STATS = [
   { label: 'Partidos próximos', value: '4', icon: CalendarDays },
