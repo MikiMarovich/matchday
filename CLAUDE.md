@@ -123,7 +123,12 @@ Especificación original:
 - `registrations`: SELECT propio o admin. **Sin** políticas de INSERT, UPDATE ni DELETE: todo pasa por funciones.
 - `notifications_log` y `audit_logs`: solo admin lee.
 
-### Paso 4 — `004_storage.sql`
+### Paso 4 — `004_storage.sql` ✅ (aplicado y verificado 2026-11-03)
+
+Estado: bucket `receipts` privado, 5 MB, 4 MIME; política INSERT (carpeta propia + inscripción propia en PENDING_PAYMENT con plazo vigente) y SELECT (propio o admin). Sin UPDATE/DELETE para nadie. 20 pruebas en PGlite.
+El frontend debe subir con `upsert: false` y nombre de archivo único (ej. con timestamp), y después llamar a `submit_receipt`.
+
+Especificación original:
 - Bucket privado `receipts`, límite de 5 MB, MIME `image/jpeg`, `image/png`, `image/webp`, `application/pdf`.
 - Ruta: `{user_id}/{registration_id}/{archivo}`.
 - Políticas: INSERT solo dentro de la carpeta propia. SELECT propio o admin. Sin UPDATE ni DELETE para jugadores.
