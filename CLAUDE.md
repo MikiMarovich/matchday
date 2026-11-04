@@ -163,6 +163,12 @@ Rutas: `/login`, `/` (próximo partido y listas públicas), `/partidos/[id]`, `/
 
 Reutilizar los componentes visuales existentes. Agregar la nav mobile del admin. Ocultar el acceso al admin para no admins. Validar el comprobante en el cliente (tipo y tamaño) y en Storage. Usar Server Actions que llamen a las funciones RPC.
 
+Dividido en sub-etapas:
+- **7a ✅ (aprobada por Mikael 2026-11-04):** rutas `/`, `/perfil`, `/mis-inscripciones`, `/admin` con layout `app/(jugador)`. Sidebar con nombre y foto reales, link al backoffice solo para el admin, perfil editable (Server Action, verificado en la base). Inicio, Mis inscripciones y admin siguen con mocks en `components/mock/` con aviso "Vista de ejemplo".
+- **7b:** admin — configuración (medios de pago) y partidos (crear, editar, cambiar estado) + nav mobile del admin.
+- **7c:** jugador — próximo partido, listas, anotarse, datos de transferencia, subir comprobante, mis inscripciones reales.
+- **7d:** admin — cola de pagos, inscripciones con filtros y promoción de suplentes, jugadores, dashboard real.
+
 ### Pasos 8 a 10
 - Resend: notificar al admin cuando llega un comprobante, y al jugador cuando se aprueba o rechaza el pago y cuando es promovido. Registrar en `notifications_log`.
 - Pruebas funcionales, de permisos y de concurrencia (casos de la sección 9 del documento de contexto).
@@ -172,3 +178,4 @@ Reutilizar los componentes visuales existentes. Agregar la nav mobile del admin.
 
 - Acceso abierto (decidido 2026-11-03): **cualquiera con cuenta de Google** puede entrar (vienen amigos y familiares ocasionales). No hay lista de emails habilitados. Quitar del login el texto "Solo para jugadores invitados".
 - Dominio de producción en Vercel: `https://matchday-alpha-seven.vercel.app`.
+- Acceso al backoffice (2026-11-04): queda como está. El admin entra con su Google, y el servidor y la base verifican su email (proxy + `requireAdmin()` + `is_admin()`). El link "Ir al backoffice" solo se renderiza para el admin. Mikael evaluó un login aparte con usuario y clave; se desaconsejó (menos seguro que Google y obliga a manejar dos cuentas). **Revisar en las pruebas reales** las alternativas: quitar el link y entrar por `/admin`, o sumar MFA TOTP de Supabase para el admin.
