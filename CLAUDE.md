@@ -110,7 +110,13 @@ Todas las funciones `security definer`, con `set search_path = ''`, `revoke exec
 
 Entregá además un script de prueba de concurrencia (por ejemplo, N inscripciones simultáneas contra un partido de capacidad baja) y verificá que nunca se excede `max_players`.
 
-### Paso 3 — `003_rls.sql`
+### Paso 3 — `003_rls.sql` ✅ (aplicado y verificado 2026-11-03)
+
+Estado: 7 políticas SELECT (+ UPDATE propio en profiles), permisos de tabla recortados (anon sin acceso, authenticated solo SELECT, UPDATE de profiles solo en `full_name` y `position`). 31 pruebas en PGlite.
+Desvío respecto de la especificación: `payment_settings` es **solo admin**; el jugador ve alias/CVU en el snapshot de su inscripción, recién con el cupo reservado.
+Avisos esperables del linter de Supabase: `rls_enabled_no_policy` en `admins` (a propósito) y `authenticated_security_definer_function_executable` en las RPC (validan permisos adentro).
+
+Especificación original:
 - `profiles`: SELECT del propio perfil o admin. UPDATE solo propio, con column grants limitados a `full_name` y `position`.
 - `matches`: SELECT para `authenticated` de los que no son DRAFT; el admin ve todo.
 - `payment_settings`: SELECT del activo para `authenticated`; el admin ve y gestiona todo.
