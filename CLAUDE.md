@@ -176,9 +176,15 @@ Decisión de Mikael: **Gmail SMTP** (nodemailer 10.1.7) en lugar de Resend, porq
 - Requiere verificación en 2 pasos en la cuenta de Gmail y una contraseña de aplicación. Variables cargadas en Vercel (Production): `GMAIL_USER` como Config y `GMAIL_APP_PASSWORD` como Secret.
 - Lección: Vercel lee las variables al armar el deploy. Después de agregar o cambiar una variable hay que hacer **Redeploy**; si no, el log registra `FAILED` con "Faltan GMAIL_USER / GMAIL_APP_PASSWORD".
 
-### Pasos 9 y 10
-- Pruebas funcionales, de permisos y de concurrencia (casos de la sección 9 del documento de contexto).
-- Variables en Vercel, deploy y verificación en producción.
+### Paso 9 — Pruebas contra la base real ✅ (2026-11-04)
+- `scripts/test-e2e.mjs` (`node --env-file=.env.local scripts/test-e2e.mjs`): 62 pruebas contra la base real. API pública sin sesión, permisos entre jugadores (incluye intentos de saltear las pantallas llamando RPC/tablas a mano) y flujo del admin con la identidad real del admin (aprobar, liberar vencidas, promover con plazo, orden de suplentes, cancelar partido, audit_logs). Crea jugadores `@matchday.test` y partidos `[TEST]`, y borra todo al final (incluidos sus audit_logs).
+- El paso "subir comprobante" se simula (UPDATE directo a PENDING_REVIEW): la subida real a Storage se cubre con las 20 pruebas del Paso 4 y la prueba manual en producción.
+- `scripts/test-concurrency.mjs` vuelto a correr: OK.
+- Advisors de Supabase: solo los esperables (`rls_enabled_no_policy` en admins, RPC security definer ejecutables por authenticated, `auth_leaked_password_protection` irrelevante porque solo hay login con Google, índice de suplentes sin uso por pocos datos).
+
+### Paso 10 — Producción
+- Hecho: variables en Vercel, deploy automático, login con Google, inscripción, comprobante y email probados en producción por Mikael.
+- Falta: una prueba real con un segundo jugador (un amigo) desde su celular.
 
 ## Decisiones funcionales
 
