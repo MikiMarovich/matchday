@@ -186,6 +186,12 @@ Decisión de Mikael: **Gmail SMTP** (nodemailer 10.1.7) en lugar de Resend, porq
 - Hecho: variables en Vercel, deploy automático, login con Google, inscripción, comprobante y email probados en producción por Mikael.
 - Falta: una prueba real con un segundo jugador (un amigo) desde su celular.
 
+### Mejoras futuras (decididas por Mikael, no urgentes)
+- **Compartir el comprobante desde Mercado Pago directo a la app** (2026-11-04): Web Share Target (`share_target` en el manifiesto + service worker que recibe el archivo y una pantalla `/compartir` que lo sube con el circuito actual). Funciona **solo en Android** y con la app instalada ("Agregar a pantalla principal"). iPhone no lo soporta (Safari no implementa share_target): para ellos, sugerir "Compartir → Guardar imagen". El grupo es mitad Android y mitad iPhone. Por ahora los jugadores sacan captura y la suben.
+- Liberar reservas vencidas automáticamente con `pg_cron`.
+- Fuente con `next/font`.
+- Acceso al backoffice: quitar el link o sumar MFA (ver Decisiones funcionales).
+
 ## Decisiones funcionales
 
 - Acceso abierto (decidido 2026-11-03): **cualquiera con cuenta de Google** puede entrar (vienen amigos y familiares ocasionales). No hay lista de emails habilitados. Quitar del login el texto "Solo para jugadores invitados".
