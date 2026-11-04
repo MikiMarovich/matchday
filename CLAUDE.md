@@ -141,7 +141,11 @@ Estado: proyecto `MATCHDAY` en Google Cloud, pantalla de consentimiento External
 Especificación original:
 Proyecto en Google Cloud, pantalla de consentimiento, credenciales OAuth Web y callback `https://uwputddqhhgcwrcetlci.supabase.co/auth/v1/callback`. En Supabase: activar el provider Google, Site URL y Redirect URLs (localhost:3000 y el dominio de Vercel). Guiar paso a paso y verificar.
 
-### Paso 6 — Conexión Next.js ↔ Supabase
+### Paso 6 — Conexión Next.js ↔ Supabase ✅ (en producción 2026-11-03)
+
+Estado: login con Google funcionando en local y en producción (probado por Mikael). Perfil creado por el trigger. `proxy.ts` usa `getClaims()` (nunca `getSession()` en servidor); rutas públicas: `/login`, `/auth/*`, `/privacidad`. Logout por POST a `/auth/signout`. Variables cargadas en Vercel (Production/Preview/Development); `DATABASE_URL` solo local. `@supabase/ssr@0.12.7`, `@supabase/supabase-js@2.118.0`. pnpm no está instalado global: usar `npx pnpm@12.3.4`.
+
+Especificación original:
 - `@supabase/ssr`, `lib/supabase/client.ts`, `lib/supabase/server.ts`.
 - `proxy.ts` para refrescar la sesión y proteger rutas.
 - `app/auth/callback/route.ts`.
