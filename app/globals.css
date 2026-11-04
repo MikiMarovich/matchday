@@ -12,3 +12,45 @@ button { cursor: pointer; } .app-shell { min-height: 100vh; display: flex; } .si
 .login-screen{min-height:100vh;background:radial-gradient(circle at 50% 25%,#254657 0,#101820 47%);display:flex;flex-direction:column;align-items:center;padding:80px 20px 30px}.login-brand{display:flex;flex-direction:column;align-items:center;gap:15px}.login-card{width:100%;max-width:390px;background:#172b3a;border:1px solid #2b4c5d;border-radius:15px;padding:42px 35px;text-align:center;margin-top:65px;box-shadow:0 20px 70px #05090c80}.login-ball{margin:-76px auto 25px;width:62px;height:62px;border-radius:50%;background:var(--primary);display:grid;place-items:center;color:#101820;border:8px solid #1d3441}.login-ball svg{width:24px;fill:currentColor}.login-card h1{margin:0;font-size:25px}.login-card>p{color:#8195a4;font-size:13px;margin:9px 0 28px}.google-button{width:100%;height:44px!important;background:#fff!important;color:#16232c!important}.google-g{font-weight:900;color:#4285f4;font-size:17px;margin-right:8px}.login-note{color:#8195a4;font-size:10px;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:22px}.login-note svg{width:13px;color:var(--primary)}.login-footer{color:#5e7380;font-size:10px;margin-top:auto}
 .admin-shell{min-height:100vh;display:flex;background:#101820}.admin-sidebar{width:235px;flex-shrink:0;background:#0d151c;border-right:1px solid #1c303d;padding:28px 16px;display:flex;flex-direction:column;gap:25px}.admin-label{font-size:9px;letter-spacing:.16em;color:#526c7a;padding:0 12px;margin-top:-10px}.admin-sidebar nav{gap:5px}.admin-sidebar nav button{position:relative}.nav-count{margin-left:auto;background:#8fbf2c;color:#0e1d12;border-radius:99px;padding:2px 6px;font-size:9px}.admin-settings,.exit-admin{background:transparent;color:#8195a4;border:0;display:flex;gap:10px;align-items:center;font-size:12px;padding:10px 12px;text-align:left}.admin-settings{margin-top:auto;border-top:1px solid #1c303d;padding-top:22px}.exit-admin{color:var(--primary)}.admin-main{flex:1;min-width:0}.admin-topbar{height:100px;border-bottom:1px solid #1c303d;display:flex;align-items:center;justify-content:space-between;padding:0 4%}.admin-topbar h1{font-size:25px;margin:7px 0 0}.admin-user{display:flex;align-items:center;gap:10px}.admin-user svg{width:15px;color:#8195a4;margin-left:8px}.admin-content{padding:35px 4%}.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.stat-card{background:#172b3a;border:1px solid #234354;border-radius:10px;padding:18px;position:relative}.stat-icon{width:30px;height:30px;display:grid;place-items:center;background:#a3e63515;color:var(--primary);border-radius:7px;margin-bottom:15px}.stat-icon svg{width:16px}.stat-card>span{display:block;color:#8195a4;font-size:11px}.stat-card>strong{display:block;font-size:25px;margin-top:5px}.stat-up{display:block;color:var(--primary);font-size:9px;margin-top:8px}.stat-up span{color:#8195a4}.admin-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:17px}.admin-match-row,.payment-row{display:flex;align-items:center;gap:10px;padding:13px 0;border-top:1px solid #264452}.admin-match-row>div:nth-child(2),.payment-row>div:nth-child(2){flex:1}.admin-match-row strong,.admin-match-row span,.payment-row strong,.payment-row span{display:block}.admin-match-row strong,.payment-row strong{font-size:11px}.admin-match-row span,.payment-row span{font-size:10px;color:#8195a4;margin-top:4px}.admin-match-row>svg,.payment-row>button+svg{width:16px;color:#8195a4}.admin-match-status{color:var(--primary)!important;font-size:10px!important;background:#a3e63512;padding:5px 8px;border-radius:99px}.payment-amount{font-size:11px!important;color:#d7e0e5!important}.payment-row button{margin-left:auto}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;text-align:left}th{font-size:9px;letter-spacing:.1em;color:#8195a4;padding:10px;border-bottom:1px solid #315263}td{font-size:11px;padding:13px 10px;border-bottom:1px solid #264452}.table-player{display:flex;align-items:center;gap:10px}.table-player b,.table-player small{display:block}.table-player small{color:#8195a4;margin-top:3px}.large-table{margin-top:0}
 @media(max-width:800px){.sidebar{position:fixed;inset:0 auto 0 0;z-index:10;transform:translateX(-100%);transition:transform .2s}.sidebar-open{transform:translateX(0)}.sidebar-open:after{content:'';position:fixed;inset:0 -100vw 0 248px;background:#0008;z-index:-1}.close-mobile,.menu-button{display:block}.sidebar-head{display:flex;justify-content:space-between}.topbar{height:72px;padding:0 20px}.topbar h2{font-size:16px}.topbar .eyebrow{font-size:8px}.menu-button{padding:0}.page-content{padding:30px 18px 60px}.welcome{align-items:flex-start;gap:15px;flex-direction:column}.welcome h1,.page-heading h1{font-size:26px}.streak{align-self:stretch}.match-card{padding:22px 18px}.match-details{gap:14px;flex-direction:column;align-items:flex-start}.match-footer{align-items:flex-end}.register-button{font-size:11px}.two-col,.registration-grid,.admin-grid{grid-template-columns:1fr}.pending-banner{align-items:flex-start;flex-wrap:wrap}.pending-banner button{margin-left:0;width:100%}.profile-card{align-items:flex-start;flex-direction:column}.profile-fields{grid-template-columns:1fr;gap:18px}.page-heading{align-items:flex-start;gap:18px;flex-direction:column}.page-heading button{width:100%}.history-card{flex-wrap:wrap}.history-date{min-width:calc(100% - 40px)}.admin-sidebar{display:none}.admin-topbar{height:80px;padding:0 18px}.admin-topbar h1{font-size:21px}.admin-content{padding:22px 18px}.stats-grid{grid-template-columns:1fr 1fr}.stat-card{padding:14px}.stat-card>strong{font-size:20px}.admin-panel{padding:16px}.admin-match-status{display:none}.payment-row{flex-wrap:wrap}.payment-row button{margin-left:auto}.form-page{padding-bottom:30px}.success-card{padding:35px 20px}.date-block{padding-left:15px}.date-block strong{font-size:28px}}
+
+/* ===== Etapa 7a: navegación con rutas reales, fotos de perfil y formularios ===== */
+
+/* Los ítems del menú ahora son <a> (Link), con el mismo look que los botones */
+.sidebar nav a, .admin-sidebar nav a { display: flex; align-items: center; gap: 13px; color: #8195a4; padding: 12px; border-radius: 9px; font-size: 14px; text-decoration: none; }
+.sidebar nav a svg, .admin-sidebar nav a svg { width: 18px; height: 18px; }
+.sidebar nav a:hover, .admin-sidebar nav a:hover { color: #d2dae0; }
+.sidebar nav a.active, .admin-sidebar nav a.active { background: #1c3746; color: var(--primary); font-weight: 600; }
+a.admin-link { text-decoration: none; }
+a.admin-link:hover b { color: var(--primary); }
+
+/* Foto de Google dentro de los avatares existentes */
+.avatar-photo { overflow: hidden; }
+.avatar-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Tocar fuera del menú en el celular lo cierra */
+.sidebar-backdrop { display: none; }
+@media (max-width: 800px) {
+  .sidebar-backdrop { display: block; position: fixed; inset: 0; z-index: 9; border: 0; background: transparent; }
+}
+
+/* Formularios */
+.form-grid { display: grid; gap: 18px; }
+.field { display: grid; gap: 7px; }
+.field-label { color: #8195a4; font-size: 11px; letter-spacing: .04em; }
+.field-input { width: 100%; height: 42px; padding: 0 12px; border-radius: 9px; border: 1px solid #294456; background: #101f2a; color: #fff; font-size: 14px; font-family: inherit; }
+.field-input:focus { outline: 2px solid var(--primary); outline-offset: 1px; border-color: transparent; }
+.field-input:disabled, .field-input[readonly] { color: #8195a4; background: #13232f; cursor: not-allowed; }
+select.field-input { appearance: none; background-image: linear-gradient(45deg, transparent 50%, #8195a4 50%), linear-gradient(135deg, #8195a4 50%, transparent 50%); background-position: calc(100% - 18px) 18px, calc(100% - 13px) 18px; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 34px; }
+.field-hint { color: #6d8594; font-size: 11px; }
+.form-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.form-message { font-size: 13px; }
+.form-message.ok { color: var(--primary); }
+.form-message.error { color: #f87171; }
+
+/* Salida del backoffice como link, al pie del menú */
+a.exit-admin { text-decoration: none; margin-top: auto; border-top: 1px solid #1c303d; padding-top: 22px; }
+
+/* Aviso de pantallas con datos de ejemplo (se elimina al terminar la etapa 7) */
+.demo-notice { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding: 12px 14px; border: 1px dashed #4d7180; border-radius: 10px; color: #9db0bb; font-size: 12px; background: #13232f; }
+.demo-notice svg { width: 16px; height: 16px; color: var(--primary); flex-shrink: 0; }
+.demo-notice b { color: #d7e0e5; }
