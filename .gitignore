@@ -7,10 +7,22 @@ __v0_jsx-dev-runtime.ts
 .v0-trash/
 .vercel/
 
-# Environment variables
+# Environment variables (nunca subir claves)
+.env
 .env*.local
 
 # Common ignores
 node_modules
 .next/
+out/
+build/
 .DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Logs
+npm-debug.log*
+pnpm-debug.log*
