@@ -1,9 +1,11 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { requireUser } from '@/lib/auth'
+import { after } from 'next/server'
+import { getMyProfile, requireUser } from '@/lib/auth'
 import { createClient } from '@/lib/supabase/server'
 import { dbErrorMessage, fail, type ActionState } from '@/lib/action-state'
+import { notifyAdminReceipt } from '@/lib/notifications'
 
 const UUID = /^[0-9a-f-]{36}$/i
 
@@ -40,11 +42,27 @@ export async function submitReceipt(registrationId: string, receiptPath: string)
   if (!receiptPath.startsWith(`${user.id}/${registrationId}/`)) return fail('La ruta del comprobante no es válida.')
 
   const supabase = await createClient()
-  const { error } = await supabase.rpc('submit_receipt', {
+  const { data: reg, error } = await supabase.rpc('submit_receipt', {
     p_registration_id: registrationId,
     p_receipt_path: receiptPath,
   })
-  if (error) return fail(dbErrorMessage(error))
+  if (error || !reg) return fail(dbErrorMessage(error))
+
+  // Datos para el email al admin (RLS: el jugador lee su perfil y el partido).
+  const [profile, { data: match }] = await Promise.all([
+    getMyProfile(),
+    supabase.from('matches').select('title, starts_at, ends_at').eq('id', reg.match_id).single(),
+  ])
+  after(() =>
+    notifyAdminReceipt(supabase, {
+      registrationId,
+      playerName: profile.full_name ?? profile.email,
+      playerEmail: profile.email,
+      matchTitle: match?.title ?? 'Partido',
+      startsAt: match?.starts_at ?? reg.created_at,
+      endsAt: match?.ends_at ?? null,
+    }),
+  )
 
   revalidatePlayer()
   return { status: 'ok', message: 'Comprobante enviado. El administrador lo va a revisar.' }

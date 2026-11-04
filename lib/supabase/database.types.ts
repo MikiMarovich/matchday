@@ -339,6 +339,10 @@ export type Database = {
         }[]
       }
       is_admin: { Args: never; Returns: boolean }
+      log_receipt_notification: {
+        Args: { p_error?: string | null; p_message_id?: string | null; p_registration_id: string; p_status: string }
+        Returns: undefined
+      }
       promote_from_waitlist: {
         Args: { p_deadline?: string | null; p_match_id: string }
         Returns: RegistrationRow
