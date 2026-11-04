@@ -208,3 +208,57 @@ input[type="date"].field-input, input[type="time"].field-input { color-scheme: d
   .deadline-box { text-align: left; }
   .transfer-card .panel-heading { flex-direction: column; align-items: flex-start; gap: 12px; }
 }
+
+
+/* ===== Etapa 7d: pagos, inscripciones, jugadores y dashboard reales ===== */
+
+.nav-badge { margin-left: auto; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 99px; background: var(--primary); color: #101820; font-size: 11px; font-weight: 800; display: inline-grid; place-items: center; }
+.plain-link { color: var(--primary); text-decoration: none; }
+.plain-link:hover { text-decoration: underline; }
+.admin-panel-heading h2 a { color: inherit; }
+
+/* Dashboard */
+a.stat-link { color: inherit; text-decoration: none; transition: border-color .15s; }
+a.stat-link:hover { border-color: #3d6a80; }
+a.admin-alert-action { text-decoration: none; border-color: #3d6834; background: #1d2e1c; color: #c9eaa0; }
+a.admin-alert-action:hover { border-color: var(--primary); }
+
+/* Cola de pagos */
+.review-card { display: grid; grid-template-columns: 220px 1fr; gap: 22px; }
+.review-receipt { background: #101f2a; border: 1px solid #294456; border-radius: 10px; min-height: 220px; display: grid; place-items: center; overflow: hidden; }
+.review-receipt img { display: block; width: 100%; max-height: 360px; object-fit: contain; }
+.review-receipt a { display: block; width: 100%; }
+.receipt-pdf { display: flex !important; flex-direction: column; align-items: center; gap: 8px; color: var(--primary); text-decoration: none; font-size: 13px; padding: 30px 0; }
+.receipt-pdf svg { width: 34px; height: 34px; }
+.receipt-missing { color: #e98c8c; font-size: 12px; padding: 20px; text-align: center; }
+.review-body { display: grid; gap: 16px; align-content: start; min-width: 0; }
+.review-data { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 18px; margin: 0; }
+.review-data dt { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: #8195a4; }
+.review-data dd { margin: 4px 0 0; font-size: 13px; color: #d7e0e5; word-break: break-word; }
+.review-data dd a { color: #d7e0e5; }
+.review-amount { font-size: 20px !important; font-weight: 800; color: var(--primary) !important; }
+.receipt-open { display: inline-flex; align-items: center; gap: 6px; color: var(--primary); font-size: 12px; text-decoration: none; }
+.receipt-open svg { width: 13px; height: 13px; }
+.review-box { display: grid; gap: 12px; }
+
+/* Inscripciones */
+.filters { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; }
+.admin-table td { vertical-align: middle; font-size: 12px; }
+.admin-table .table-player small { font-size: 11px; }
+.cell-detail { color: #9db0bb; min-width: 180px; }
+.cell-detail::first-letter { text-transform: uppercase; }
+.cell-actions { white-space: nowrap; text-align: right; }
+.cell-actions > * + * { margin-left: 12px; }
+.match-tools { display: grid; gap: 12px; margin-top: 4px; }
+.match-tool { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px; border: 1px solid #294456; border-radius: 10px; background: #13232f; }
+.match-tool strong { display: block; font-size: 13px; }
+.match-tool span { display: block; font-size: 12px; color: #9db0bb; margin-top: 4px; line-height: 1.45; }
+.minutes-input { display: inline-flex !important; align-items: center; gap: 8px; margin-top: 8px; font-size: 12px; color: #9db0bb; }
+.minutes-input .field-input { width: 90px; height: 36px; }
+
+@media (max-width: 800px) {
+  .review-card { grid-template-columns: 1fr; }
+  .review-data { grid-template-columns: 1fr; }
+  .filters { grid-template-columns: 1fr; }
+  .match-tool { flex-direction: column; align-items: stretch; }
+}

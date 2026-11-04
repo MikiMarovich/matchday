@@ -23,9 +23,10 @@ export function formFields(formData: FormData): Record<string, string> {
 /**
  * Las funciones de la base tiran el error con un código estable en `message`
  * (ej. INVALID_TRANSITION) y el texto en español en `hint`. Mostramos el hint;
- * si no hay (error inesperado), un mensaje genérico, sin filtrar detalles internos.
+ * si no es uno de nuestros códigos (error inesperado de Postgres/PostgREST, cuyo hint puede
+ * traer detalles técnicos en inglés), un mensaje genérico, sin filtrar detalles internos.
  */
 export function dbErrorMessage(error: { message?: string; hint?: string | null } | null): string {
-  if (error?.hint) return error.hint
+  if (error?.hint && /^[A-Z][A-Z_]+$/.test(error.message ?? '')) return error.hint
   return 'No se pudo completar la operación. Probá de nuevo.'
 }

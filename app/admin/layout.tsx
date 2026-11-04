@@ -1,5 +1,6 @@
 import { AdminShell } from '@/components/admin/admin-shell'
 import { getMyProfile, requireAdmin } from '@/lib/auth'
+import { getPendingReviewCount } from '@/lib/admin-data'
 
 /**
  * Todo lo que cuelga de /admin pasa por acá. El proxy ya filtró por ADMIN_EMAIL;
@@ -8,9 +9,9 @@ import { getMyProfile, requireAdmin } from '@/lib/auth'
  */
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   await requireAdmin()
-  const profile = await getMyProfile()
+  const [profile, pendingReview] = await Promise.all([getMyProfile(), getPendingReviewCount()])
   return (
-    <AdminShell adminName={profile.full_name} avatarUrl={profile.avatar_url}>
+    <AdminShell adminName={profile.full_name} avatarUrl={profile.avatar_url} pendingReview={pendingReview}>
       {children}
     </AdminShell>
   )

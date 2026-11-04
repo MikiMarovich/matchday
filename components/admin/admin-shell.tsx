@@ -3,14 +3,16 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ArrowLeft, CalendarDays, LayoutDashboard, Menu, Settings, X } from 'lucide-react'
+import { ArrowLeft, CalendarDays, LayoutDashboard, Menu, Settings, ShieldCheck, Users, WalletCards, X } from 'lucide-react'
 import { Logo } from '@/components/logo'
 import { UserAvatar } from '@/components/user-avatar'
 
-// Inscripciones, Pagos y Jugadores se suman en la etapa 7d (no se muestran links a pantallas que no existen).
 const NAV = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/partidos', label: 'Partidos', icon: CalendarDays },
+  { href: '/admin/inscripciones', label: 'Inscripciones', icon: Users },
+  { href: '/admin/pagos', label: 'Pagos', icon: WalletCards },
+  { href: '/admin/jugadores', label: 'Jugadores', icon: ShieldCheck },
   { href: '/admin/configuracion', label: 'Configuración', icon: Settings },
 ]
 
@@ -21,10 +23,12 @@ function isActive(pathname: string, href: string) {
 export function AdminShell({
   adminName,
   avatarUrl,
+  pendingReview,
   children,
 }: {
   adminName: string | null
   avatarUrl: string | null
+  pendingReview: number
   children: React.ReactNode
 }) {
   const pathname = usePathname()
@@ -53,6 +57,11 @@ export function AdminShell({
             >
               <Icon />
               {label}
+              {href === '/admin/pagos' && pendingReview > 0 && (
+                <span className="nav-badge" aria-label={`${pendingReview} por revisar`}>
+                  {pendingReview}
+                </span>
+              )}
             </Link>
           ))}
         </nav>
