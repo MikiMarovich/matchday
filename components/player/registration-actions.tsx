@@ -121,36 +121,49 @@ function validateFile(file: File): string | null {
 
 export function ReceiptUpload({ userId, registrationId }: { userId: string; registrationId: string }) {
   const [file, setFile] = useState<File | null>(null)
+  // Copia en memoria del archivo, leída apenas se elige. En Android, Chrome guarda solo
+  // una referencia al archivo de la galería: si el jugador sale a otra app (Mercado Pago,
+  // Naranja X) y vuelve, ese permiso puede caducar y el envío falla antes de salir del
+  // celular (ERR_UPLOAD_FILE_CHANGED). Con los bytes ya leídos eso no pasa.
+  const [data, setData] = useState<Blob | null>(null)
   const [state, setState] = useState<ActionState | null>(null)
   const [pending, startTransition] = useTransition()
   const inputRef = useRef<HTMLInputElement>(null)
 
-  function onPick(f: File | undefined) {
+  async function onPick(f: File | undefined) {
     if (!f) return
-    const problem = validateFile(f)
-    if (problem) {
+    const reset = (message: string) => {
       setFile(null)
-      setState({ status: 'error', message: problem })
+      setData(null)
+      setState({ status: 'error', message })
       if (inputRef.current) inputRef.current.value = ''
-      return
+    }
+    const problem = validateFile(f)
+    if (problem) return reset(problem)
+    try {
+      const bytes = await f.arrayBuffer()
+      setData(new Blob([bytes], { type: f.type }))
+    } catch {
+      return reset('No se pudo leer el archivo. Elegilo de nuevo desde la galería.')
     }
     setFile(f)
     setState(null)
   }
 
   function send() {
-    if (!file) return
+    if (!file || !data) return
     startTransition(async () => {
       // Nombre único con timestamp: el bucket no permite pisar archivos (sin UPDATE ni upsert).
       const path = `${userId}/${registrationId}/${Date.now()}.${ALLOWED[file.type]}`
       const supabase = createClient()
       const { error: uploadError } = await supabase.storage
         .from('receipts')
-        .upload(path, file, { upsert: false, contentType: file.type })
+        .upload(path, data, { upsert: false, contentType: file.type })
       if (uploadError) {
+        console.error('[ReceiptUpload]', uploadError)
         setState({
           status: 'error',
-          message: 'No se pudo subir el archivo. Si se venció el plazo, recargá la página; si no, probá de nuevo.',
+          message: 'No se pudo subir el archivo. Revisá tu conexión y probá de nuevo; si sigue fallando, recargá la página y elegí el archivo otra vez.',
         })
         return
       }
@@ -172,7 +185,7 @@ export function ReceiptUpload({ userId, registrationId }: { userId: string; regi
           onChange={(e) => onPick(e.target.files?.[0])}
         />
       </label>
-      <Button className="full-button" disabled={!file || pending} onClick={send}>
+      <Button className="full-button" disabled={!file || !data || pending} onClick={send}>
         {pending ? 'Enviando…' : 'Enviar comprobante'}
       </Button>
       <Feedback state={state} />
